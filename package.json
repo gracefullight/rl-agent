@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "test": "vitest",
-    "test:e2e": "playwright test tests/e2e/"
+    "test:e2e": "playwright test tests/e2e/",
+    "build:static": "next build && echo 'Static build completed'"
   },
   "keywords": [],
   "author": "",
@@ -35,14 +38,17 @@
     "@biomejs/biome": "2.2.4",
     "@playwright/test": "^1.55.0",
     "@tailwindcss/postcss": "^4.1.13",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.3.1",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "autoprefixer": "^10.4.21",
+    "js-yaml": "^4.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }
