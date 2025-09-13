@@ -72,66 +72,70 @@ const GridCanvasImpl = () => {
   // Reverse the row order so (1,1) is bottom-left
   const reversedCells = [...gridWorld.cells].slice().reverse();
   return (
-    <Stage
-      width={STAGE_WIDTH}
-      height={STAGE_HEIGHT}
-      aria-label="Grid World Simulation"
-      role="application"
-    >
-      <Layer>
-        {/* Render grid cells + overlays */}
-        {reversedCells.flat().map((cell) => {
-          const key = `${cell.position.row},${cell.position.col}`;
-          const policyDir = policy.actions.get(key);
-          return (
-            <Group key={key}>
-              <GridCellRect cell={cell} onClick={handleCellClick} />
-              {/* Utility value (center) */}
-              <Text
-                x={(cell.position.col - 1) * CELL_SIZE + 8}
-                y={(GRID_HEIGHT - cell.position.row) * CELL_SIZE + 8}
-                text={utilityValues.values.get(key)?.toFixed(2) ?? ""}
-                fontSize={16}
-                fill="#495057"
-                fontStyle="bold"
-                data-testid={`utility-display-${cell.position.row}-${cell.position.col}`}
-              />
-              {/* Reward (bottom left) */}
-              <Text
-                x={(cell.position.col - 1) * CELL_SIZE + 4}
-                y={(GRID_HEIGHT - cell.position.row + 1) * CELL_SIZE - 18}
-                text={`R: ${cell.reward}`}
-                fontSize={12}
-                fill="#888"
-              />
-              {/* Policy direction (top right) */}
-              {policyDir && (
+    <div data-testid="grid-canvas" className="p-2 md:p-3 rounded-lg border bg-card shadow-sm block max-w-full h-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <Stage
+        data-testid="grid-canvas"
+        width={STAGE_WIDTH}
+        height={STAGE_HEIGHT}
+        aria-label="Grid World Simulation"
+        role="application"
+        className="block max-w-full h-auto"
+      >
+        <Layer>
+          {/* Render grid cells + overlays */}
+          {reversedCells.flat().map((cell) => {
+            const key = `${cell.position.row},${cell.position.col}`;
+            const policyDir = policy.actions.get(key);
+            return (
+              <Group key={key}>
+                <GridCellRect cell={cell} onClick={handleCellClick} />
+                {/* Utility value (center) */}
                 <Text
-                  x={cell.position.col * CELL_SIZE - 28}
-                  y={(GRID_HEIGHT - cell.position.row) * CELL_SIZE + 4}
-                  text={
-                    policyDir === "up"
-                      ? "↑"
-                      : policyDir === "down"
-                        ? "↓"
-                        : policyDir === "left"
-                          ? "←"
-                          : policyDir === "right"
-                            ? "→"
-                            : ""
-                  }
-                  fontSize={18}
-                  fill="#e8590c"
+                  x={(cell.position.col - 1) * CELL_SIZE + 8}
+                  y={(GRID_HEIGHT - cell.position.row) * CELL_SIZE + 8}
+                  text={utilityValues.values.get(key)?.toFixed(2) ?? ""}
+                  fontSize={16}
+                  fill="#495057"
                   fontStyle="bold"
+                  data-testid={`utility-display-${cell.position.row}-${cell.position.col}`}
                 />
-              )}
-            </Group>
-          );
-        })}
-        {/* Render agent */}
-        <AgentCircle position={agent.currentPosition} />
-      </Layer>
-    </Stage>
+                {/* Reward (bottom left) */}
+                <Text
+                  x={(cell.position.col - 1) * CELL_SIZE + 4}
+                  y={(GRID_HEIGHT - cell.position.row + 1) * CELL_SIZE - 18}
+                  text={`R: ${cell.reward}`}
+                  fontSize={12}
+                  fill="#888"
+                />
+                {/* Policy direction (top right) */}
+                {policyDir && (
+                  <Text
+                    x={cell.position.col * CELL_SIZE - 28}
+                    y={(GRID_HEIGHT - cell.position.row) * CELL_SIZE + 4}
+                    text={
+                      policyDir === "up"
+                        ? "↑"
+                        : policyDir === "down"
+                          ? "↓"
+                          : policyDir === "left"
+                            ? "←"
+                            : policyDir === "right"
+                              ? "→"
+                              : ""
+                    }
+                    fontSize={18}
+                    fill="#e8590c"
+                    fontStyle="bold"
+                  />
+                )}
+              </Group>
+            );
+          })}
+          {/* Render agent */}
+          <AgentCircle position={agent.currentPosition} />
+        </Layer>
+      </Stage>
+    </div>
   );
 
   // (CycleCount component removed; should be defined in its own file)

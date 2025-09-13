@@ -15,8 +15,8 @@ const ControlPanel = () => {
   const [agent] = useAtom(agentAtom);
 
   return (
-    <Card className="w-full max-w-md mx-auto mt-4">
-      <CardContent className="flex flex-col gap-4">
+    <Card className="w-full max-w-md mx-auto mt-4 border rounded-lg bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/40 px-4 sm:px-6 py-3">
+      <CardContent className="flex flex-col gap-4" data-testid="control-panel">
         <div className="flex items-center gap-2">
           <Label htmlFor="step-reward">Step Reward</Label>
           <span className="font-mono text-sm text-primary">{config.stepReward.toFixed(2)}</span>

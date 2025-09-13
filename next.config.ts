@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 
+const isGhPages =
+  process.env.NODE_ENV === "production" ||
+  process.env.USE_GH_PAGES_PATH === "true";
+
 const nextConfig: NextConfig = {
   // Enable static export for GitHub Pages
   output: "export",
@@ -7,11 +11,9 @@ const nextConfig: NextConfig = {
   // Enable trailing slashes for better GitHub Pages compatibility
   trailingSlash: true,
 
-  // Configure base path for GitHub Pages subdirectory hosting
-  basePath: "/rl-agent",
-
-  // Set asset prefix to match base path
-  assetPrefix: "/rl-agent",
+  // Conditionally set basePath and assetPrefix for GitHub Pages
+  basePath: isGhPages ? "/rl-agent" : "",
+  assetPrefix: isGhPages ? "/rl-agent" : "",
 
   // Configure images for static hosting (disable optimization)
   images: {

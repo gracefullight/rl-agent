@@ -17,53 +17,59 @@ export const UtilityDisplay = () => {
   const [gridWorld] = useAtom(gridWorldAtom);
   return (
     <Card className="w-full max-w-lg mx-auto mt-4">
-      <CardHeader>
+      <CardHeader className="px-3 py-2">
         <CardTitle>Utility Values</CardTitle>
       </CardHeader>
-      <CardContent>
-        <Table className="table-fixed">
-          <TableHeader>
-            <TableRow>
-              <TableCell className="w-16"></TableCell>
-              {[...Array(gridWorld.dimensions.width)].map((_, colIdx) => {
-                const colKey = `col-${colIdx + 1}`;
-                return <TableCell key={colKey} className="text-center p-2 w-20">Col {colIdx + 1}</TableCell>;
-              })}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {[...gridWorld.cells]
-              .slice()
-              .reverse()
-              .map((row, rIdx) => (
-                <TableRow key={`row-${rIdx + 1}`}>
-                  <TableCell className="w-16">
-                    Row {gridWorld.dimensions.height - rIdx}
-                  </TableCell>
-                  {row.map((cell) => (
-                    <TableCell
-                      key={`cell-${cell.position.row}-${cell.position.col}`}
-                      data-testid={`utility-display-${cell.position.row}-${cell.position.col}`}
-                      className="text-center p-2 w-20"
-                    >
-                      <Badge
-                        variant={
-                          cell.type === "terminal" ? "destructive" : "default"
-                        }
-                        className="font-mono text-xs w-14 justify-center"
-                      >
-                        {(() => {
-                          const value = utilityValues.values.get(`${cell.position.row},${cell.position.col}`);
-                          if (value === undefined) return "0.00";
-                          return value.toFixed(2);
-                        })()}
-                      </Badge>
+      <CardContent className="px-2 py-2">
+        <div
+          className="overflow-x-auto overflow-y-auto max-h-[40vh] md:max-h-none pb-[env(safe-area-inset-bottom,4rem)] rounded-b-lg"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+          data-testid="utility-display"
+        >
+          <Table className="table-fixed min-w-full">
+            <TableHeader>
+              <TableRow>
+                <TableCell className="w-16"></TableCell>
+                {[...Array(gridWorld.dimensions.width)].map((_, colIdx) => {
+                  const colKey = `col-${colIdx + 1}`;
+                  return <TableCell key={colKey} className="text-center p-2 w-20">Col {colIdx + 1}</TableCell>;
+                })}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {[...gridWorld.cells]
+                .slice()
+                .reverse()
+                .map((row, rIdx) => (
+                  <TableRow key={`row-${rIdx + 1}`}>
+                    <TableCell className="w-16">
+                      Row {gridWorld.dimensions.height - rIdx}
                     </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+                    {row.map((cell) => (
+                      <TableCell
+                        key={`cell-${cell.position.row}-${cell.position.col}`}
+                        data-testid={`utility-display-${cell.position.row}-${cell.position.col}`}
+                        className="text-center p-2 w-20"
+                      >
+                        <Badge
+                          variant={
+                            cell.type === "terminal" ? "destructive" : "default"
+                          }
+                          className="font-mono text-xs w-14 justify-center"
+                        >
+                          {(() => {
+                            const value = utilityValues.values.get(`${cell.position.row},${cell.position.col}`);
+                            if (value === undefined) return "0.00";
+                            return value.toFixed(2);
+                          })()}
+                        </Badge>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </div>
       </CardContent>
     </Card>
   );
@@ -85,10 +91,10 @@ export const PolicyDisplay = () => {
 
   return (
     <Card className="w-full max-w-lg mx-auto mt-4">
-      <CardHeader>
+      <CardHeader className="px-3 py-2">
         <CardTitle>Policy</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-2 py-2">
         <Table className="table-fixed">
           <TableHeader>
             <TableRow>

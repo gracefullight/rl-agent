@@ -11,7 +11,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] bg-background/60 backdrop-blur">
+        {children}
+      </body>
     </html>
   )
 }
